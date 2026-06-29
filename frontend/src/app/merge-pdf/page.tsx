@@ -23,7 +23,7 @@ export default function MergePdfPage() {
     
     try {
       const mergedBytes = await mergePdfs(files);
-      const blob = new Blob([mergedBytes], { type: 'application/pdf' });
+      const blob = new Blob([mergedBytes as unknown as BlobPart], { type: 'application/pdf' });
       const url = window.URL.createObjectURL(blob);
       
       const a = document.createElement('a');

@@ -23,7 +23,7 @@ export default function SplitPdfPage() {
       const toDownload = splitBytes.slice(0, 10);
       
       for (let i = 0; i < toDownload.length; i++) {
-        const blob = new Blob([toDownload[i]], { type: 'application/pdf' });
+        const blob = new Blob([toDownload[i] as unknown as BlobPart], { type: 'application/pdf' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
