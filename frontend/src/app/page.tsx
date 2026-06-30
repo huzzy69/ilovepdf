@@ -38,7 +38,7 @@ export default function Home() {
       <main className="max-w-7xl mx-auto px-6 py-12">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-b from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
-            Every PDF tool you need, built locally
+            Every PDF tool you need, built locally, worldwide
           </h1>
           <p className="text-lg text-slate-400 font-medium">
             100% secure processing inside your workstation. Zero data tracking. Maximum speed.
