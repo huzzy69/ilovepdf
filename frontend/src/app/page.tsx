@@ -5,17 +5,18 @@ import {
 } from 'lucide-react';
 
 const tools = [
-  { name: 'Compress PDF', desc: 'Reduce file size while optimizing for maximal PDF quality.', icon: Minimize2, color: 'text-green-500', bg: 'bg-green-500/10', href: '#', label: 'Optimize' },
+  { name: 'Compress PDF', desc: 'Reduce file size while optimizing for maximal PDF quality.', icon: Minimize2, color: 'text-green-500', bg: 'bg-green-500/10', href: '/compress-pdf', label: 'Optimize' },
   { name: 'PDF to Word', desc: 'Easily convert your PDF files into easy to edit DOC and DOCX documents.', icon: FileText, color: 'text-blue-500', bg: 'bg-blue-500/10', href: '/pdf-to-word', label: 'Convert' },
-  { name: 'PDF to Excel', desc: 'Pull data straight from PDFs into Excel spreadsheets in a few short seconds.', icon: FileSpreadsheet, color: 'text-emerald-500', bg: 'bg-emerald-500/10', href: '#', label: 'Convert' },
-  { name: 'Excel to PDF', desc: 'Make EXCEL spreadsheets easy to read by converting them to PDF.', icon: FileSpreadsheet, color: 'text-green-600', bg: 'bg-green-600/10', href: '#', label: 'Convert' },
+  { name: 'JPG to Word', desc: 'Convert document images to editable Word files via high-accuracy OCR.', icon: FileText, color: 'text-sky-500', bg: 'bg-sky-500/10', href: '/jpg-to-word', label: 'Convert' },
+  { name: 'PDF to Excel', desc: 'Pull data straight from PDFs into Excel spreadsheets in a few short seconds.', icon: FileSpreadsheet, color: 'text-emerald-500', bg: 'bg-emerald-500/10', href: '/pdf-to-excel', label: 'Convert' },
+  { name: 'Excel to PDF', desc: 'Make EXCEL spreadsheets easy to read by converting them to PDF.', icon: FileSpreadsheet, color: 'text-green-600', bg: 'bg-green-600/10', href: '/excel-to-pdf', label: 'Convert' },
   { name: 'Merge PDF', desc: 'Combine PDFs in the order you want with the easiest PDF merger available.', icon: Layers, color: 'text-red-500', bg: 'bg-red-500/10', href: '/merge-pdf', label: 'Organize' },
   { name: 'Split PDF', desc: 'Separate one page or a whole set for easy conversion into independent PDF files.', icon: Scissors, color: 'text-orange-500', bg: 'bg-orange-500/10', href: '/split-pdf', label: 'Organize' },
-  { name: 'PDF to JPG', desc: 'Convert each PDF page into a JPG or extract all images contained in a PDF.', icon: Image, color: 'text-amber-500', bg: 'bg-amber-500/10', href: '#', label: 'Convert' },
-  { name: 'JPG to PDF', desc: 'Convert JPG images to PDF in seconds. Easily adjust orientation and margins.', icon: Image, color: 'text-yellow-500', bg: 'bg-yellow-500/10', href: '#', label: 'Convert' },
-  { name: 'OCR PDF', desc: 'Easily convert scanned PDF into searchable and selectable documents.', icon: ScanEye, color: 'text-lime-500', bg: 'bg-lime-500/10', href: '#', label: 'Enhance' },
-  { name: 'Protect PDF', desc: 'Protect PDF files with a password. Encrypt PDF documents to prevent unauthorized access.', icon: ShieldCheck, color: 'text-indigo-500', bg: 'bg-indigo-500/10', href: '#', label: 'Security' },
-  { name: 'Unlock PDF', desc: 'Remove PDF password security, giving you the freedom to use your PDFs as you want.', icon: Unlock, color: 'text-cyan-500', bg: 'bg-cyan-500/10', href: '#', label: 'Security' }
+  { name: 'PDF to JPG', desc: 'Convert each PDF page into a JPG or extract all images contained in a PDF.', icon: Image, color: 'text-amber-500', bg: 'bg-amber-500/10', href: '/pdf-to-jpg', label: 'Convert' },
+  { name: 'JPG to PDF', desc: 'Convert JPG images to PDF in seconds. Easily adjust orientation and margins.', icon: Image, color: 'text-yellow-500', bg: 'bg-yellow-500/10', href: '/jpg-to-pdf', label: 'Convert' },
+  { name: 'OCR PDF', desc: 'Easily convert scanned PDF into searchable and selectable documents.', icon: ScanEye, color: 'text-lime-500', bg: 'bg-lime-500/10', href: '/ocr-pdf', label: 'Enhance' },
+  { name: 'Protect PDF', desc: 'Protect PDF files with a password. Encrypt PDF documents to prevent unauthorized access.', icon: ShieldCheck, color: 'text-indigo-500', bg: 'bg-indigo-500/10', href: '/protect-pdf', label: 'Security' },
+  { name: 'Unlock PDF', desc: 'Remove PDF password security, giving you the freedom to use your PDFs as you want.', icon: Unlock, color: 'text-cyan-500', bg: 'bg-cyan-500/10', href: '/unlock-pdf', label: 'Security' }
 ];
 
 export default function Home() {
@@ -48,6 +49,30 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {tools.map((tool) => {
             const IconComponent = tool.icon;
+            if (tool.comingSoon) {
+              return (
+                <div 
+                  key={tool.name} 
+                  className="relative bg-slate-950/20 border border-slate-900/60 rounded-2xl p-6 opacity-40 cursor-not-allowed overflow-hidden select-none"
+                >
+                  <div className="flex items-start justify-between mb-5">
+                    <div className={`p-3 rounded-xl ${tool.bg} ${tool.color}`}>
+                      <IconComponent className="w-6 h-6" />
+                    </div>
+                    <span className="text-[11px] font-semibold tracking-wider uppercase px-2.5 py-1 bg-slate-950 text-slate-500 rounded-full border border-slate-900">
+                      Coming Soon
+                    </span>
+                  </div>
+                  
+                  <h3 className="text-xl font-bold text-slate-500 mb-2">
+                    {tool.name}
+                  </h3>
+                  <p className="text-sm text-slate-500 leading-relaxed font-normal font-sans">
+                    {tool.desc}
+                  </p>
+                </div>
+              );
+            }
             return (
               <Link 
                 key={tool.name} 
@@ -66,7 +91,7 @@ export default function Home() {
                 <h3 className="text-xl font-bold text-slate-100 mb-2 transition-colors group-hover:text-indigo-400">
                   {tool.name}
                 </h3>
-                <p className="text-sm text-slate-400 leading-relaxed font-normal">
+                <p className="text-sm text-slate-400 leading-relaxed font-normal font-sans">
                   {tool.desc}
                 </p>
                 

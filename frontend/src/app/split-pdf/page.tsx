@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { FileUpload } from '../../components/ui/FileUpload';
 import { splitPdf } from '../../lib/pdfClient';
-import { File as FileIcon } from 'lucide-react';
+import { File as FileIcon, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
 export default function SplitPdfPage() {
   const [file, setFile] = useState<File | null>(null);
@@ -48,18 +49,35 @@ export default function SplitPdfPage() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-900 text-white p-6">
-      <div className="max-w-4xl mx-auto space-y-12 pt-12">
+    <div className="min-h-screen bg-neutral-900 text-white flex flex-col p-6">
+      {/* Navigation Header */}
+      <header className="max-w-7xl mx-auto w-full flex items-center justify-between mb-12">
+        <Link 
+          href="/" 
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-neutral-800/80 hover:bg-neutral-700 border border-neutral-700/30 hover:border-neutral-500/50 transition-all text-neutral-300 hover:text-white text-sm font-semibold"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>Back to Dashboard</span>
+        </Link>
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-bold tracking-tight text-neutral-400">
+            iLove<span className="text-indigo-400">PDF</span> Ultra
+          </span>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="flex-1 max-w-4xl w-full mx-auto space-y-12 pb-12">
         <div className="text-center space-y-4">
           <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500">
             Split PDF
           </h1>
-          <p className="text-xl text-neutral-400">
+          <p className="text-xl text-neutral-400 font-sans">
             Separate one page or a whole set for easy conversion into independent PDF files.
           </p>
         </div>
 
-        <div className="flex justify-center">
+        <div className="flex justify-center w-full">
           <FileUpload 
             onFilesSelected={handleFileSelected}
             multiple={false}

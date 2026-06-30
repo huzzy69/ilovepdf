@@ -1,48 +1,41 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FileUpload } from '../../components/ui/FileUpload';
-import Link from 'next/link';
+import { FileUpload } from '@/components/ui/FileUpload';
 import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 
-export default function PdfToWordPage() {
+export default function PdfToJpgPage() {
   const [isProcessing, setIsProcessing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleConvert = async (files: File[]) => {
     const file = files[0];
     if (!file) return;
 
     setIsProcessing(true);
-    setError(null);
 
     const formData = new FormData();
     formData.append('file', file);
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-      const response = await fetch(`${apiUrl}/api/convert/pdf-to-word`, {
+      const response = await fetch(`${apiUrl}/api/convert/pdf-to-jpg`, {
         method: 'POST',
         body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error('Conversion failed');
-      }
+      if (!response.ok) throw new Error('Conversion failed');
 
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = file.name.replace('.pdf', '.docx');
+      a.download = `${file.name.replace('.pdf', '')}_images.zip`;
       document.body.appendChild(a);
       a.click();
-      document.body.removeChild(a);
-      setTimeout(() => {
-        window.URL.revokeObjectURL(url);
-      }, 100);
+      window.URL.revokeObjectURL(url);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Unknown error occurred');
+      alert('Error converting PDF to JPG');
     } finally {
       setIsProcessing(false);
     }
@@ -68,33 +61,13 @@ export default function PdfToWordPage() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col items-center justify-center max-w-3xl w-full mx-auto text-center space-y-8 pb-12">
-        <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-          PDF to Word Converter
-        </h1>
-        <p className="text-xl text-neutral-400">
-          Convert your PDF to an editable Word document with incredible accuracy.
-        </p>
+        <h1 className="text-5xl font-bold text-amber-400">PDF to JPG</h1>
+        <p className="text-xl text-neutral-400">Extract images or convert every page into a JPG.</p>
         
         <div className="flex justify-center w-full">
-          <FileUpload 
-            onFilesSelected={handleConvert}
-            accept={{ 'application/pdf': ['.pdf'] }}
-            multiple={false}
-            title="Select PDF file"
-          />
+          <FileUpload onFilesSelected={handleConvert} title="Select PDF" />
         </div>
-
-        {isProcessing && (
-          <div className="text-blue-400 animate-pulse text-lg">
-            Converting your document, please wait...
-          </div>
-        )}
-        
-        {error && (
-          <div className="text-red-400 text-lg">
-            Error: {error}
-          </div>
-        )}
+        {isProcessing && <p className="text-amber-400 animate-pulse mt-4">Converting pages to images...</p>}
       </div>
     </div>
   );
